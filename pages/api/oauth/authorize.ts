@@ -1,8 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { encodeState } from '../../../lib/oauth/state';
 import { env } from '../../../lib/variables';
-
-const GITHUB_OAUTH_AUTHORIZE_URL = 'https://github.com/login/oauth/authorize';
+import { GITHUB_OAUTH_AUTHORIZE_URL } from '../../../services/config';
 
 export default async function OAuthAuthorizeApi(req: NextApiRequest, res: NextApiResponse) {
   const appReturnUrl = req.query.redirect_uri as string;

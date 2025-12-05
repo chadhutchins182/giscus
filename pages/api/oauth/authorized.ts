@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { encodeState, decodeState } from '../../../lib/oauth/state';
 import { env } from '../../../lib/variables';
+import { GITHUB_OAUTH_ACCESS_TOKEN_URL } from '../../../services/config';
 
-const GITHUB_OAUTH_ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token';
 const TOKEN_VALIDITY_PERIOD = 1000 * 60 * 60 * 24 * 365; // 1 year;
 
 export default async function OAuthAuthorizedApi(req: NextApiRequest, res: NextApiResponse) {

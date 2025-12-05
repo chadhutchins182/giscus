@@ -1,9 +1,10 @@
 import { env } from '../../lib/variables';
+import { GITHUB_API_URL } from '../config';
 
 export async function check(token: string): Promise<boolean> {
   const { client_id, client_secret } = env;
   const auth = Buffer.from(`${client_id}:${client_secret}`).toString('base64');
-  return fetch(`https://api.github.com/applications/${client_id}/token`, {
+  return fetch(`${GITHUB_API_URL}/applications/${client_id}/token`, {
     method: 'POST',
     headers: {
       Accept: 'application/vnd.github+json',

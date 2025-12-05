@@ -1,6 +1,7 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { AvailableLanguage, getDir } from '../lib/i18n';
 import { getThemeUrl, resolveTheme } from '../lib/utils';
+import { env } from '../lib/variables';
 
 class CustomDocument extends Document {
   render() {
@@ -10,11 +11,14 @@ class CustomDocument extends Document {
     const resolvedTheme = resolveTheme(theme || 'preferred_color_scheme');
     const themeUrl = getThemeUrl(resolvedTheme, theme);
 
+    const isGitHubEnterprise = env.github_url !== 'https://github.com';
+    const apiHost = isGitHubEnterprise ? `${env.github_url}/api` : 'https://api.github.com';
+
     return (
       <Html dir={getDir(this.props.locale as AvailableLanguage)}>
         <Head>
           <link rel="icon" href="/favicon.ico" />
-          <link rel="preconnect" href="https://api.github.com" />
+          <link rel="preconnect" href={apiHost} />
           <link rel="preconnect" href="https://avatars3.githubusercontent.com" />
           <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
           <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />

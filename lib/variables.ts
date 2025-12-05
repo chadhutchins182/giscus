@@ -7,6 +7,7 @@ export const env = {
   private_key: process.env.GITHUB_PRIVATE_KEY,
   encryption_password: process.env.ENCRYPTION_PASSWORD,
   app_host: process.env.NEXT_PUBLIC_GISCUS_APP_HOST as `https://${string}`,
+  github_url: process.env.NEXT_PUBLIC_GITHUB_URL || 'https://github.com',
   postgrest_url: process.env.POSTGREST_URL,
   postgrest_role: process.env.POSTGREST_ROLE,
   postgrest_secret: process.env.POSTGREST_SECRET,
