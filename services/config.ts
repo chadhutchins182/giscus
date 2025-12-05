@@ -9,7 +9,9 @@ const isGitHubEnterprise = env.github_url !== 'https://github.com';
 // GitHub.com uses api.github.com for both REST and GraphQL
 const GITHUB_API_HOST = isGitHubEnterprise ? `${env.github_url}/api/v3` : 'https://api.github.com';
 
-const GITHUB_GRAPHQL_HOST = isGitHubEnterprise ? `${env.github_url}/api` : 'https://api.github.com';
+export const GITHUB_GRAPHQL_HOST = isGitHubEnterprise
+  ? `${env.github_url}/api`
+  : 'https://api.github.com';
 
 export const GITHUB_GRAPHQL_API_URL = `${GITHUB_GRAPHQL_HOST}/graphql`;
 
