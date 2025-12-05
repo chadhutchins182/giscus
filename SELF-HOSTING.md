@@ -23,6 +23,7 @@ the web app. You can use this guide as a reference.
 ## Create a new GitHub App
 
 - Go to the [GitHub App creation page][create-app].
+  - For GitHub Enterprise Server, go to `https://YOUR-GITHUB-ENTERPRISE-URL/settings/apps/new`
 
 ### Register new GitHub App
 
@@ -199,6 +200,11 @@ functions.
 - Set the [example environment variables][env-example] in your
   deployment and change the values accordingly. On a server, you can put them in
   a `.env.local` file and Next.js will automatically pick it up.
+  
+  **For GitHub Enterprise Server**: Set the `NEXT_PUBLIC_GITHUB_URL` environment
+  variable to your GitHub Enterprise Server URL (e.g., `https://github.company.com`).
+  Do not include a trailing slash. If this variable is not set, giscus will use
+  the default `https://github.com`.
 
 - Install the dependencies.
 
