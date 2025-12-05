@@ -17,10 +17,8 @@ const COPY_BUTTON_HTML = `
 
 // GitHub uses the @ghost user to replace deleted users on the website,
 // but returns `null` in the API.
-const GITHUB_URL =
-  typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_GITHUB_URL
-    ? process.env.NEXT_PUBLIC_GITHUB_URL
-    : 'https://github.com';
+// Use the NEXT_PUBLIC_ prefixed env var which is available in both server and browser
+const GITHUB_URL = process.env.NEXT_PUBLIC_GITHUB_URL || 'https://github.com';
 
 const GhostUser: GUser = {
   avatarUrl: 'https://avatars.githubusercontent.com/u/10137?s=64&v=4',
