@@ -9,7 +9,8 @@ A comments system powered by [GitHub Discussions][discussions]. Let visitors lea
 - Supports [multiple languages][multiple-languages]. 🌐
 - [Extensively configurable][advanced-usage]. 🔧
 - Automatically fetches new comments and edits from GitHub. 🔃
-- [Can be self-hosted][self-hosting]! 🤳
+- [Can be self-hosted][self-hosting]! 🤳 
+  - [Docker deployment available][docker-deployment] 🐳
 
 > **Note**
 > giscus is still under active development. GitHub is also still actively developing Discussions and its API. Thus, some features of giscus may break or change over time.
@@ -28,6 +29,7 @@ To comment, visitors must authorize the [giscus app][giscus-app] to [post on the
 [creating-custom-themes]: https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md#data-theme
 [multiple-languages]: https://github.com/giscus/giscus/blob/main/CONTRIBUTING.md#adding-localizations
 [self-hosting]: https://github.com/giscus/giscus/blob/main/SELF-HOSTING.md
+[docker-deployment]: https://github.com/giscus/giscus/blob/main/DOCKER.md
 [search-api]: https://docs.github.com/en/graphql/guides/using-the-graphql-api-for-discussions#search
 [giscus-app]: https://github.com/apps/giscus
 [authorization]: https://docs.github.com/en/developers/apps/identifying-and-authorizing-users-for-github-apps

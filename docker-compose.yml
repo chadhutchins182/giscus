@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  giscus:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: giscus
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    restart: unless-stopped
+    # Uncomment the following lines if you need to persist data
+    # volumes:
+    #   - ./data:/app/data

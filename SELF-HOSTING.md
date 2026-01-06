@@ -226,29 +226,79 @@ functions.
   yarn start
   ```
 
-### Containerized Deployment (Optional)
+### Docker Deployment
 
-For fully disconnected or air-gapped environments, you can containerize giscus:
+For containerized deployment (recommended for production and disconnected environments):
 
-- Create a `Dockerfile`:
-  ```dockerfile
-  FROM node:18-alpine
-  WORKDIR /app
-  COPY package.json yarn.lock ./
-  RUN yarn install --frozen-lockfile --production=false
-  COPY . .
-  RUN yarn build
-  EXPOSE 3000
-  CMD ["yarn", "start"]
-  ```
+#### Using Docker Compose (Recommended)
 
-- Build and run:
-  ```bash
-  docker build -t giscus .
-  docker run -p 3000:3000 --env-file .env.local giscus
-  ```
+The repository includes a `docker-compose.yml` file for easy deployment:
 
-Note: Ensure all dependencies are available during the build phase. For truly disconnected environments, you may need to pre-download node_modules and include them in your build context.
+1. Create your `.env.local` file with required environment variables (see [.env.example](.env.example))
+
+2. Start the container:
+   ```bash
+   docker-compose up -d
+   ```
+
+3. Access giscus at `http://localhost:3000`
+
+4. To stop:
+   ```bash
+   docker-compose down
+   ```
+
+#### Using Docker directly
+
+Alternatively, you can use Docker commands directly:
+
+1. Build the image:
+   ```bash
+   docker build -t giscus .
+   ```
+
+2. Run the container:
+   ```bash
+   docker run -d \
+     --name giscus \
+     -p 3000:3000 \
+     --env-file .env.local \
+     giscus
+   ```
+
+3. View logs:
+   ```bash
+   docker logs -f giscus
+   ```
+
+4. Stop the container:
+   ```bash
+   docker stop giscus
+   docker rm giscus
+   ```
+
+#### For Air-gapped/Disconnected Environments
+
+If deploying to an environment without internet access:
+
+1. Build the image on a connected machine:
+   ```bash
+   docker build -t giscus:offline .
+   ```
+
+2. Save the image to a file:
+   ```bash
+   docker save giscus:offline > giscus-offline.tar
+   ```
+
+3. Transfer `giscus-offline.tar` to the disconnected environment
+
+4. Load the image:
+   ```bash
+   docker load < giscus-offline.tar
+   ```
+
+5. Run using the same commands as above
 
 ## Use the deployed self-hosted giscus
 
