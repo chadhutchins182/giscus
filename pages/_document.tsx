@@ -1,6 +1,7 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { AvailableLanguage, getDir } from '../lib/i18n';
 import { getThemeUrl, resolveTheme } from '../lib/utils';
+import { GITHUB_GRAPHQL_HOST } from '../services/config';
 
 class CustomDocument extends Document {
   render() {
@@ -14,7 +15,7 @@ class CustomDocument extends Document {
       <Html dir={getDir(this.props.locale as AvailableLanguage)}>
         <Head>
           <link rel="icon" href="/favicon.ico" />
-          <link rel="preconnect" href="https://api.github.com" />
+          <link rel="preconnect" href={GITHUB_GRAPHQL_HOST} />
           <link rel="preconnect" href="https://avatars3.githubusercontent.com" />
           <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
           <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />

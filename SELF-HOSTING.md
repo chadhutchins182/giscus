@@ -23,6 +23,7 @@ the web app. You can use this guide as a reference.
 ## Create a new GitHub App
 
 - Go to the [GitHub App creation page][create-app].
+  - For GitHub Enterprise Server, go to `https://YOUR-GITHUB-ENTERPRISE-URL/settings/apps/new`
 
 ### Register new GitHub App
 
@@ -32,8 +33,10 @@ the web app. You can use this guide as a reference.
   - Feel free to name it whatever you want (e.g. `myblog-comments`). I would
     appreciate it if you indicate that it is a self-hosted version of
     [giscus][giscus] (with the link) in the description.
-  - Use `https://giscus.app` as the homepage URL unless you also accept any
-    users to use your service on their repositories.
+  - **Homepage URL**:
+    - For personal use or GitHub Enterprise Server: Use your deployment URL (e.g., `https://comments.yourdomain.com`)
+    - If offering a public service like giscus.app: Use `https://giscus.app` or your service URL
+    - The homepage URL should match where users will access your giscus instance
 
 ### Identifying and authorizing users
 
@@ -199,6 +202,11 @@ functions.
 - Set the [example environment variables][env-example] in your
   deployment and change the values accordingly. On a server, you can put them in
   a `.env.local` file and Next.js will automatically pick it up.
+  
+  **For GitHub Enterprise Server**: Set the `NEXT_PUBLIC_GITHUB_URL` environment
+  variable to your GitHub Enterprise Server URL (e.g., `https://github.company.com`).
+  Do not include a trailing slash. If this variable is not set, giscus will use
+  the default `https://github.com`.
 
 - Install the dependencies.
 
@@ -217,6 +225,80 @@ functions.
   ```
   yarn start
   ```
+
+### Docker Deployment
+
+For containerized deployment (recommended for production and disconnected environments):
+
+#### Using Docker Compose (Recommended)
+
+The repository includes a `docker-compose.yml` file for easy deployment:
+
+1. Create your `.env.local` file with required environment variables (see [.env.example](.env.example))
+
+2. Start the container:
+   ```bash
+   docker-compose up -d
+   ```
+
+3. Access giscus at `http://localhost:3000`
+
+4. To stop:
+   ```bash
+   docker-compose down
+   ```
+
+#### Using Docker directly
+
+Alternatively, you can use Docker commands directly:
+
+1. Build the image:
+   ```bash
+   docker build -t giscus .
+   ```
+
+2. Run the container:
+   ```bash
+   docker run -d \
+     --name giscus \
+     -p 3000:3000 \
+     --env-file .env.local \
+     giscus
+   ```
+
+3. View logs:
+   ```bash
+   docker logs -f giscus
+   ```
+
+4. Stop the container:
+   ```bash
+   docker stop giscus
+   docker rm giscus
+   ```
+
+#### For Air-gapped/Disconnected Environments
+
+If deploying to an environment without internet access:
+
+1. Build the image on a connected machine:
+   ```bash
+   docker build -t giscus:offline .
+   ```
+
+2. Save the image to a file:
+   ```bash
+   docker save giscus:offline > giscus-offline.tar
+   ```
+
+3. Transfer `giscus-offline.tar` to the disconnected environment
+
+4. Load the image:
+   ```bash
+   docker load < giscus-offline.tar
+   ```
+
+5. Run using the same commands as above
 
 ## Use the deployed self-hosted giscus
 

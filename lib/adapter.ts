@@ -2,6 +2,7 @@ import { MouseEvent as ReactMouseEvent } from 'react';
 import { IComment, IGiscussion, IReactionGroups, IReply } from './types/adapter';
 import { GComment, GReactionGroup, GReply, GRepositoryDiscussion, GUser } from './types/github';
 import { clipboardCopy } from './utils';
+import { env } from './variables';
 
 const COPY_BUTTON_HTML = `
 <div class="zeroclipboard-container position-absolute right-0 top-0">
@@ -20,7 +21,7 @@ const COPY_BUTTON_HTML = `
 const GhostUser: GUser = {
   avatarUrl: 'https://avatars.githubusercontent.com/u/10137?s=64&v=4',
   login: 'ghost',
-  url: 'https://github.com/ghost',
+  url: `${env.github_url}/ghost`,
 };
 
 export function adaptReactionGroups(reactionGroups: GReactionGroup[]): IReactionGroups {
@@ -173,7 +174,7 @@ export function processCommentBody(bodyHTML: string) {
 
   content
     .querySelectorAll<HTMLAnchorElement>('a.commit-tease-sha')
-    .forEach((a) => (a.href = 'https://github.com' + a.pathname));
+    .forEach((a) => (a.href = env.github_url + a.pathname));
 
   content
     .querySelectorAll<HTMLDivElement>(
