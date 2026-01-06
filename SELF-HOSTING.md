@@ -33,8 +33,10 @@ the web app. You can use this guide as a reference.
   - Feel free to name it whatever you want (e.g. `myblog-comments`). I would
     appreciate it if you indicate that it is a self-hosted version of
     [giscus][giscus] (with the link) in the description.
-  - Use `https://giscus.app` as the homepage URL unless you also accept any
-    users to use your service on their repositories.
+  - **Homepage URL**:
+    - For personal use or GitHub Enterprise Server: Use your deployment URL (e.g., `https://comments.yourdomain.com`)
+    - If offering a public service like giscus.app: Use `https://giscus.app` or your service URL
+    - The homepage URL should match where users will access your giscus instance
 
 ### Identifying and authorizing users
 
@@ -223,6 +225,30 @@ functions.
   ```
   yarn start
   ```
+
+### Containerized Deployment (Optional)
+
+For fully disconnected or air-gapped environments, you can containerize giscus:
+
+- Create a `Dockerfile`:
+  ```dockerfile
+  FROM node:18-alpine
+  WORKDIR /app
+  COPY package.json yarn.lock ./
+  RUN yarn install --frozen-lockfile --production=false
+  COPY . .
+  RUN yarn build
+  EXPOSE 3000
+  CMD ["yarn", "start"]
+  ```
+
+- Build and run:
+  ```bash
+  docker build -t giscus .
+  docker run -p 3000:3000 --env-file .env.local giscus
+  ```
+
+Note: Ensure all dependencies are available during the build phase. For truly disconnected environments, you may need to pre-download node_modules and include them in your build context.
 
 ## Use the deployed self-hosted giscus
 
